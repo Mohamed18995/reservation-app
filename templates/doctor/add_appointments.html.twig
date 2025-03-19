@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Rendez-vous{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un Rendez-vous</h1>
+
+    <form method="POST">
+        <div>
+            <label for="date">Date</label>
+            <input type="date" id="date" name="date" required>
+        </div>
+
+        <div>
+            <label for="time">Heure</label>
+            <input type="time" id="time" name="time" required>
+        </div>
+
+        <div>
+            <label for="patient">Sélectionner un Patient</label>
+            <select id="patient" name="patient" required>
+                {% for patient in patients %}
+                    <option value="{{ patient.id }}">{{ patient.fullName }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit">Ajouter le Rendez-vous</button>
+    </form>
+
+    <a href="{{ path('doctor_appointments', {'id': app.user.id}) }}">Retour aux Rendez-vous</a>
+{% endblock %}

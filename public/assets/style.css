@@ -1,0 +1,30 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.navbar {
+    background-color: #007bff;
+}
+
+.navbar a {
+    color: white !important;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
