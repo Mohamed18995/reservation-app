@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réservation Médicale{% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+    <h1>Réservez votre consultation</h1>
+    <form action="{{ path('app_reservation') }}" method="post">
+        <label for="medecin">Médecin</label>
+        <select name="medecin" id="medecin">
+            <option value="medecin1">Dr. Mohamed</option>
+            <option value="medecin2">Dr. Zahraa</option>
+        </select>
+        <label for="date">Date</label>
+        <input type="date" name="date" id="date">
+        <button type="submit">Réserver</button>
+    </form>
+</div>
+{% endblock %}
