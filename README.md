@@ -37,34 +37,25 @@ Outils : Composer, Git, GitHub
 ------------------------------------------------------------------
 📜 Installation et configuration
 🔹 1️⃣ Cloner le projet
-sh
-Copier
-Modifier
+
 git clone https://github.com/TON-UTILISATEUR/medical-reservation.git
 cd medical-reservation
 🔹 2️⃣ Installer les dépendances
-sh
-Copier
-Modifier
+
 composer install
 🔹 3️⃣ Configurer la base de données
 Dans le fichier .env, modifier la ligne suivante :
 
 env
-Copier
-Modifier
+
 DATABASE_URL="mysql://root:password@127.0.0.1:3306/medical_reservation"
 Puis exécuter :
 
-sh
-Copier
-Modifier
+
 php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate
 🔹 4️⃣ Lancer le serveur
-sh
-Copier
-Modifier
+
 symfony server:start
 L'application sera accessible à http://127.0.0.1:8000/.
 
