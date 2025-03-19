@@ -27,6 +27,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $prenom = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $telephone = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -95,5 +112,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): static
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): static
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
+
+        return $this;
     }
 }
