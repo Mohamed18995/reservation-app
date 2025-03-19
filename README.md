@@ -1,10 +1,12 @@
 # Projet de Réservation Médicale avec Symfony 7.1 🏥
-
+------------------------------------------------------
 📌 Description
+
 Ce projet est une application web permettant aux patients de réserver des consultations médicales en ligne avec différents médecins. 
 Il permet également aux médecins de gérer leurs disponibilités et aux administrateurs de superviser les réservations.
-
+---------------------------------------------------------
 🚀 Fonctionnalités
+
 🔹 Utilisateurs et Rôles
 👤 Patients
 ✅ Création d’un compte et authentification
@@ -22,11 +24,17 @@ Il permet également aux médecins de gérer leurs disponibilités et aux admini
 ✅ Gestion des spécialités médicales
 ✅ Supervision des rendez-vous
 
+--------------------------------------------------------
 🏗 Technologies utilisées
+
 Backend : Symfony 7.1 (PHP, Doctrine, Security, Twig)
+
 Base de données : MySQL
+
 Frontend : HTML, CSS (Bootstrap/Tailwind), JavaScript
+
 Outils : Composer, Git, GitHub
+------------------------------------------------------------------
 📜 Installation et configuration
 🔹 1️⃣ Cloner le projet
 sh
@@ -60,10 +68,9 @@ Modifier
 symfony server:start
 L'application sera accessible à http://127.0.0.1:8000/.
 
+------------------------------------------------------------
 📂 Architecture du projet
-bash
-Copier
-Modifier
+
 /medical-reservation
 │── /migrations        → Migrations de la base de données
 │── /src
@@ -74,12 +81,20 @@ Modifier
 │── .env               → Configuration de l’application
 │── composer.json      → Dépendances PHP
 │── README.md          → Documentation
+
+-----------------------------------------------------------------
 💡 Améliorations futures
+
 ✅ Paiement en ligne des consultations
+
 ✅ Intégration d’une API pour la prise de rendez-vous
+
 ✅ Notifications par email/SMS
 
+------------------------------------------------------------------
 📬 Contact
+
 📧 Email : alshahoudmohamed95@gmail.com
 
+-----------------------------------------------------------------
 🔥 Star ce projet si tu le trouves utile ! ⭐
