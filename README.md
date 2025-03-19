@@ -33,14 +33,9 @@ Base de données : MySQL
 
 Frontend : HTML, CSS (Bootstrap/Tailwind), JavaScript
 
-Outils : Composer, Git, GitHub
+Outils : Composer
 ------------------------------------------------------------------
 📜 Installation et configuration
-🔹 1️⃣ Cloner le projet
-
-git clone https://github.com/TON-UTILISATEUR/medical-reservation.git
-cd medical-reservation
-🔹 2️⃣ Installer les dépendances
 
 composer install
 🔹 3️⃣ Configurer la base de données
@@ -48,7 +43,7 @@ Dans le fichier .env, modifier la ligne suivante :
 
 env
 
-DATABASE_URL="mysql://root:password@127.0.0.1:3306/medical_reservation"
+DATABASE_URL="mysql://root:@127.0.0.1:3306/reservation_app"
 Puis exécuter :
 
 
