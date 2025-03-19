@@ -1,7 +1,8 @@
 # Projet de Réservation Médicale avec Symfony 7.1 🏥
 
 📌 Description
-Ce projet est une application web permettant aux patients de réserver des consultations médicales en ligne avec différents médecins. Il permet également aux médecins de gérer leurs disponibilités et aux administrateurs de superviser les réservations.
+Ce projet est une application web permettant aux patients de réserver des consultations médicales en ligne avec différents médecins. 
+Il permet également aux médecins de gérer leurs disponibilités et aux administrateurs de superviser les réservations.
 
 🚀 Fonctionnalités
 🔹 Utilisateurs et Rôles
