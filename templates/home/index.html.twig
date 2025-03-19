@@ -1,12 +1,86 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Page d'Accueil - Réservation Médicale{% endblock %}
+{% block title %}Accueil - Centre Médical SH{% endblock %}
 
 {% block body %}
+<div class="container mt-4">
+    <!-- Carrousel d'images médicales -->
+    <div id="medicalCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{{ asset('images/carousel1.jpg') }}" class="d-block w-100" alt="Hôpital moderne">
+            </div>
+            <div class="carousel-item">
+                <img src="{{ asset('images/carousel2.jpg') }}" class="d-block w-100" alt="Salle d'attente médicale">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#medicalCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Précédent</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#medicalCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Suivant</span>
+        </button>
+    </div>
+</div>
 
-<div class="example-wrapper">
-    <h1>Bienvenue sur notre plateforme de réservation médicale</h1>
-    <a href="{{ path('app_login') }}">S'inscrire</a>
-    <a href="{{ path('app_login') }}">Se connecter</a>
+
+<div class="container mt-5">
+    <!-- Section Hero -->
+    <div class="row align-items-center">
+        <div class="col-md-6">
+            <h1 class="display-4">Prenez rendez-vous avec votre médecin en ligne</h1>
+            <p class="lead">Facilitez votre prise de rendez-vous médical grâce à notre plateforme rapide et intuitive.</p>
+            <a href="{{ path('app_login') }}" class="btn btn-primary btn-lg">Prendre un rendez-vous</a>
+        </div>
+        <div class="col-md-6">
+            <img src="{{ asset('images/doctor-appointment.svg') }}" alt="Consultation médicale" class="img-fluid">
+        </div>
+    </div>
+
+    <!-- Services -->
+    <div class="row mt-5">
+        <div class="col-md-4 text-center">
+            <img src="{{ asset('images/online-booking.png') }}" alt="Réservation en ligne" class="img-fluid mb-3" width="100">
+            <h4>Réservation en ligne</h4>
+            <p>Choisissez votre médecin et planifiez votre consultation en quelques clics.</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <img src="{{ asset('images/secure-data.png') }}" alt="Données sécurisées" class="img-fluid mb-3" width="100">
+            <h4>Données sécurisées</h4>
+            <p>Vos informations médicales sont protégées et accessibles uniquement par vous et votre médecin.</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <img src="{{ asset('images/reminder.png') }}" alt="Rappels automatiques" class="img-fluid mb-3" width="100">
+            <h4>Rappels automatiques</h4>
+            <p>Recevez des notifications pour ne jamais manquer un rendez-vous.</p>
+        </div>
+    </div>
+
+    <!-- Témoignages -->
+    <div class="mt-5 p-4 bg-light rounded">
+        <h3 class="text-center">Ce que disent nos patients</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card p-3 shadow-sm">
+                    <p>"Une plateforme intuitive et efficace. J’ai réservé un rendez-vous en moins de 2 minutes !"</p>
+                    <small class="text-muted">- Marie D.</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3 shadow-sm">
+                    <p>"Un service fiable et sécurisé. Je recommande vivement."</p>
+                    <small class="text-muted">- Jean L.</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3 shadow-sm">
+                    <p>"Plus besoin d'attendre au téléphone, je prends mes RDV en ligne facilement."</p>
+                    <small class="text-muted">- Sophie T.</small>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
