@@ -8,15 +8,44 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             {{ form_start(registrationForm) }}
+            
+            <!-- Champ email -->
             <div class="mb-3">
                 {{ form_label(registrationForm.email) }}
                 {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(registrationForm.email) }}
             </div>
+            
+            <!-- Champ mot de passe -->
             <div class="mb-3">
                 {{ form_label(registrationForm.plainPassword) }}
                 {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(registrationForm.plainPassword) }}
             </div>
+            
+            <!-- Champ confirmation du mot de passe -->
+            <div class="mb-3">
+                {{ form_label(registrationForm.passwordConfirm) }}  {# Assure-toi que ce champ est dans ton formulaire Symfony #}
+                {{ form_widget(registrationForm.passwordConfirm, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(registrationForm.passwordConfirm) }}
+            </div>
+            
+            <!-- Ajouter des champs supplémentaires si nécessaire -->
+            <div class="mb-3">
+                {{ form_label(registrationForm.firstName) }}
+                {{ form_widget(registrationForm.firstName, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(registrationForm.firstName) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(registrationForm.lastName) }}
+                {{ form_widget(registrationForm.lastName, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(registrationForm.lastName) }}
+            </div>
+            
+            <!-- Bouton soumettre -->
             <button type="submit" class="btn btn-primary w-100">S'inscrire</button>
+            
             {{ form_end(registrationForm) }}
         </div>
     </div>

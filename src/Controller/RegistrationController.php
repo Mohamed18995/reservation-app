@@ -4,34 +4,23 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
-use App\Repository\UserRepository;
-use App\Security\AppAuthenticator;
-use App\Security\EmailVerifier;
+use App\Security\EmailVerifier; // Utilisation d'EmailVerifier
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
-use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
 class RegistrationController extends AbstractController
 {
+    private EmailVerifier $emailVerifier; // Injection de EmailVerifier
 
-    private VerifyEmailHelperInterface $verifyEmailHelper;
-    private MailerInterface $mailer;
-
-    public function __construct(VerifyEmailHelperInterface $verifyEmailHelper, MailerInterface $mailer)
+    // Constructeur avec injection de EmailVerifier
+    public function __construct(EmailVerifier $emailVerifier)
     {
-        $this->verifyEmailHelper = $verifyEmailHelper;
-        $this->mailer = $mailer;
+        $this->emailVerifier = $emailVerifier;
     }
 
     #[Route('/register', name: 'app_register')]
@@ -42,29 +31,37 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword($passwordHasher->hashPassword($user, $form->get('plainPassword')->getData()));
+            // Récupérer les données du mot de passe en clair et de la confirmation
+            $plainPassword = $form->get('plainPassword')->getData();
+            $passwordConfirm = $form->get('passwordConfirm')->getData();
+
+            // Vérifier que les mots de passe correspondent
+            if ($plainPassword !== $passwordConfirm) {
+                $this->addFlash('error', 'Les mots de passe ne correspondent pas.');
+                return $this->redirectToRoute('app_register');
+            }
+
+            // Hachage du mot de passe
+            $user->setPassword($passwordHasher->hashPassword($user, $plainPassword));
+
+            // Initialiser isVerified à false (l'utilisateur doit vérifier son email)
             $user->setIsVerified(false);
+
+            // Persist l'utilisateur dans la base de données
             $em->persist($user);
             $em->flush();
 
-            // Générer le lien de vérification
-            $signatureComponents = $this->verifyEmailHelper->generateSignature(
-                'app_verify_email',
-                $user->getId(),
-                $user->getEmail(),
-                ['id' => $user->getId()]
-            );
-
-            // Envoyer l'email
-            $email = (new Email())
-                ->from('no-reply@tonsite.com')
+            // Créer l'email de confirmation avec le lien signé
+            $email = (new TemplatedEmail())
+                ->from('alshahoudmohamed95@gmail.com')
                 ->to($user->getEmail())
                 ->subject('Vérifiez votre adresse e-mail')
-                ->html('<p>Veuillez cliquer sur le lien suivant pour vérifier votre adresse email :</p>
-                        <a href="'.$signatureComponents->getSignedUrl().'">Confirmer mon email</a>');
+                ->htmlTemplate('registration/confirmation_email.html.twig'); 
 
-            $this->mailer->send($email);
+            // Envoi de l'email de confirmation
+            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user, $email);
 
+            // Rediriger l'utilisateur vers la page de confirmation
             return $this->redirectToRoute('app_register_confirmation');
         }
 
@@ -79,19 +76,31 @@ class RegistrationController extends AbstractController
         $userId = $request->query->get('id');
 
         if (null === $userId) {
+            $this->addFlash('error', 'Lien de vérification invalide.');
             return $this->redirectToRoute('app_register');
         }
 
         $user = $em->getRepository(User::class)->find($userId);
 
         if (!$user) {
+            $this->addFlash('error', 'Utilisateur non trouvé.');
             return $this->redirectToRoute('app_register');
         }
 
-        $user->setIsVerified(true);
-        $em->persist($user);
-        $em->flush();
+        // Valider le lien de confirmation
+        try {
+            $this->emailVerifier->handleEmailConfirmation($request, $user);
+            $this->addFlash('success', 'Votre email a été vérifié avec succès.');
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Erreur de validation du lien.');
+        }
 
         return $this->redirectToRoute('app_login');
+    }
+
+    #[Route('/register/confirmation', name: 'app_register_confirmation')]
+    public function registerConfirmation(): Response
+    {
+        return $this->render('registration/confirmation.html.twig');
     }
 }

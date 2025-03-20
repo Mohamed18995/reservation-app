@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Cet email est déjà utilisé.')]
@@ -23,8 +23,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
-
-    
 
     #[ORM\Column]
     private array $roles = [];
@@ -61,6 +59,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?bool $isVerified = false;
+
+    // Propriété temporaire pour le mot de passe en clair
+    /**
+     * @Assert\NotBlank(message="Le mot de passe ne peut pas être vide.")
+     * @Assert\Length(min=6, minMessage="Le mot de passe doit contenir au moins {{ limit }} caractères.")
+     */
+    private ?string $plainPassword = null;
 
     public function __construct()
     {
@@ -135,10 +140,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
+        // Si tu stockes des données temporaires sensibles sur l'utilisateur, efface-les ici.
         // $this->plainPassword = null;
     }
 
+    // Getter et setter pour plainPassword (mot de passe en clair)
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): static
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {

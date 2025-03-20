@@ -34,3 +34,16 @@ body {
     object-fit: cover;
     border-radius: 10px;
 }
+
+.carousel-inner img {
+    max-height: 450px;
+    object-fit: cover;
+}
+
+.testimonial-card {
+    transition: transform 0.3s ease-in-out;
+}
+
+.testimonial-card:hover {
+    transform: scale(1.05);
+}
