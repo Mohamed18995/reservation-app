@@ -4,49 +4,62 @@
 
 {% block body %}
 <div class="container mt-5">
-    <h2 class="text-center">Créer un compte</h2>
     <div class="row justify-content-center">
         <div class="col-md-6">
-            {{ form_start(registrationForm) }}
-            
-            <!-- Champ email -->
-            <div class="mb-3">
-                {{ form_label(registrationForm.email) }}
-                {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(registrationForm.email) }}
-            </div>
-            
-            <!-- Champ mot de passe -->
-            <div class="mb-3">
-                {{ form_label(registrationForm.plainPassword) }}
-                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(registrationForm.plainPassword) }}
-            </div>
-            
-            <!-- Champ confirmation du mot de passe -->
-            <div class="mb-3">
-                {{ form_label(registrationForm.passwordConfirm) }}  {# Assure-toi que ce champ est dans ton formulaire Symfony #}
-                {{ form_widget(registrationForm.passwordConfirm, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(registrationForm.passwordConfirm) }}
-            </div>
-            
-            <!-- Ajouter des champs supplémentaires si nécessaire -->
-            <div class="mb-3">
-                {{ form_label(registrationForm.firstname) }}
-                {{ form_widget(registrationForm.firstname, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(registrationForm.firstname) }}
-            </div>
+            <div class="card shadow-lg p-4">
+                <h2 class="text-center text-primary mb-4">Créer un compte</h2>
 
-            <div class="mb-3">
-                {{ form_label(registrationForm.lastname) }}
-                {{ form_widget(registrationForm.lastname, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(registrationForm.lastname) }}
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success text-center">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
+                {{ form_start(registrationForm, {'attr': {'class': 'needs-validation', 'novalidate': 'true'}}) }}
+
+                <!-- Champ Nom -->
+                <div class="mb-3">
+                    {{ form_label(registrationForm.lastname, null, {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(registrationForm.lastname, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(registrationForm.lastname) }}
+                </div>
+
+                <!-- Champ Prénom -->
+                <div class="mb-3">
+                    {{ form_label(registrationForm.firstname, null, {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(registrationForm.firstname, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(registrationForm.firstname) }}
+                </div>
+
+                <!-- Champ Email -->
+                <div class="mb-3">
+                    {{ form_label(registrationForm.email, null, {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(registrationForm.email) }}
+                </div>
+
+                <!-- Champ Mot de passe -->
+                <div class="mb-3">
+                    {{ form_label(registrationForm.plainPassword, null, {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(registrationForm.plainPassword) }}
+                </div>
+
+                <!-- Champ Confirmation du mot de passe -->
+                <div class="mb-3">
+                    {{ form_label(registrationForm.passwordConfirm, null, {'label_attr': {'class': 'form-label fw-bold'}}) }}
+                    {{ form_widget(registrationForm.passwordConfirm, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(registrationForm.passwordConfirm) }}
+                </div>
+
+                <!-- Bouton S'inscrire -->
+                <button type="submit" class="btn btn-primary w-100 mt-3">S'inscrire</button>
+
+                {{ form_end(registrationForm) }}
             </div>
-            
-            <!-- Bouton soumettre -->
-            <button type="submit" class="btn btn-primary w-100">S'inscrire</button>
-            
-            {{ form_end(registrationForm) }}
+            <p class="text-center mt-3">
+                Déjà un compte ? <a href="{{ path('app_login') }}" class="text-primary">Connectez-vous ici</a>.
+            </p>
         </div>
     </div>
 </div>
