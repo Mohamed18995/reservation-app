@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -55,7 +56,14 @@ class RegistrationController extends AbstractController
                 ->from('alshahoudmohamed95@gmail.com')
                 ->to($user->getEmail())
                 ->subject('Vérifiez votre adresse e-mail')
-                ->htmlTemplate('registration/confirmation_email.html.twig'); 
+                ->htmlTemplate('registration/confirmation_email.html.twig')
+                ->context([
+                    'user' => $user,  // ✅ Passer l'utilisateur au template
+                    'signedUrl' => $this->generateUrl('app_verify_email', [
+                        'id' => $user->getId(),
+                    ], UrlGeneratorInterface::ABSOLUTE_URL),
+                    'expiresAtMessageKey' => '24 heures', // Remplace ceci par la vraie durée d'expiration si nécessaire
+                ]);
 
             // Envoi de l'email de confirmation
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user, $email);
